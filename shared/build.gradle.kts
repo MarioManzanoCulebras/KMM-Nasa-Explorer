@@ -1,9 +1,12 @@
+@file:Suppress("UnstableApiUsage", "OPT_IN_USAGE", "PropertyName")
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
 }
 
 kotlin {
+    kotlin.applyDefaultHierarchyTemplate()
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -11,7 +14,7 @@ kotlin {
             }
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -25,10 +28,16 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            //put your multiplatform dependencies here
+            implementation(libs.bundles.ktor)
+            implementation(libs.koin.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.koin.test)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.io.ktor.ktor.client.darwin)
         }
     }
 }
@@ -37,6 +46,6 @@ android {
     namespace = "com.mariomanzano.kmm_nasa_explorer"
     compileSdk = 34
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
     }
 }

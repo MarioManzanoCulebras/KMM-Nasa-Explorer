@@ -7,6 +7,8 @@ compose-material3 = "1.1.2"
 androidx-activityCompose = "1.8.0"
 io-ktor = "2.1.2"
 koin = "3.5.0"
+io-arrow-kt = "1.1.2"
+kotlinx-datetime = "0.5.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -29,6 +31,14 @@ io-ktor-ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.re
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 
+io-arrow-kt-arrow-annotations = { module = "io.arrow-kt:arrow-annotations", version.ref = "io-arrow-kt" }
+io-arrow-kt-arrow-annotations-jvm = { module = "io.arrow-kt:arrow-annotations-jvm", version.ref = "io-arrow-kt" }
+io-arrow-kt-arrow-continuations = { module = "io.arrow-kt:arrow-continuations", version.ref = "io-arrow-kt" }
+io-arrow-kt-arrow-core = "io.arrow-kt:arrow-core:1.2.1"
+io-arrow-kt-arrow-core-jvm = { module = "io.arrow-kt:arrow-core-jvm", version.ref = "io-arrow-kt" }
+
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -39,4 +49,8 @@ kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = 
 [bundles]
 ktor = [
     "io-ktor-ktor-client-core", "io-ktor-ktor-client-content-negotiation", "io-ktor-ktor-serialization-kotlinx-json"
+]
+
+arrow = [
+    "io-arrow-kt-arrow-annotations", "io-arrow-kt-arrow-annotations-jvm", "io-arrow-kt-arrow-continuations", "io-arrow-kt-arrow-core", "io-arrow-kt-arrow-core-jvm"
 ]

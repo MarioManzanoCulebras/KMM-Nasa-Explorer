@@ -7,8 +7,10 @@ compose-material3 = "1.1.2"
 androidx-activityCompose = "1.8.0"
 io-ktor = "2.1.2"
 koin = "3.5.0"
-io-arrow-kt = "1.1.2"
+io-arrow-kt = "1.2.0"
 kotlinx-datetime = "0.5.0"
+org-jetbrains-kotlinx = "1.6.4"
+androidx-lifecycle = "2.5.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -31,13 +33,21 @@ io-ktor-ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.re
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 
-io-arrow-kt-arrow-annotations = { module = "io.arrow-kt:arrow-annotations", version.ref = "io-arrow-kt" }
-io-arrow-kt-arrow-annotations-jvm = { module = "io.arrow-kt:arrow-annotations-jvm", version.ref = "io-arrow-kt" }
 io-arrow-kt-arrow-continuations = { module = "io.arrow-kt:arrow-continuations", version.ref = "io-arrow-kt" }
 io-arrow-kt-arrow-core = "io.arrow-kt:arrow-core:1.2.1"
-io-arrow-kt-arrow-core-jvm = { module = "io.arrow-kt:arrow-core-jvm", version.ref = "io-arrow-kt" }
 
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
+org-jetbrains-kotlinx-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
+org-jetbrains-kotlinx-kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "org-jetbrains-kotlinx" }
+org-jetbrains-kotlinx-kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+org-jetbrains-kotlinx-kotlinx-coroutines-core-jvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "org-jetbrains-kotlinx" }
+org-jetbrains-kotlinx-kotlinx-coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "org-jetbrains-kotlinx" }
+org-jetbrains-kotlinx-kotlinx-coroutines-slf4j = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j", version.ref = "org-jetbrains-kotlinx" }
+org-jetbrains-kotlinx-kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3"
+
+androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -52,5 +62,5 @@ ktor = [
 ]
 
 arrow = [
-    "io-arrow-kt-arrow-annotations", "io-arrow-kt-arrow-annotations-jvm", "io-arrow-kt-arrow-continuations", "io-arrow-kt-arrow-core", "io-arrow-kt-arrow-core-jvm"
+    "io-arrow-kt-arrow-continuations", "io-arrow-kt-arrow-core"
 ]

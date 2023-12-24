@@ -30,12 +30,17 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.bundles.ktor)
             implementation(libs.koin.core)
+            implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
             implementation(libs.bundles.arrow)
             implementation(libs.kotlinx.datetime)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
             implementation(libs.koin.test)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.androidx.lifecycle.viewmodel)
         }
 
         iosMain.dependencies {

@@ -7,9 +7,8 @@ class DailyPicturesRepository(
     private val remoteDataSource: PODRemoteDataSource
 ) {
 
-    private val localList: List<PictureOfDayItem>? = null
+    val localList: List<PictureOfDayItem>? = null
 
     fun findById(id: Int): PictureOfDayItem? = localList?.find { it.id == id }
-    suspend fun requestPODSingleDay(date: String) = remoteDataSource.findPODDay(date)
     suspend fun requestPODList() = remoteDataSource.findPODitems()
 }

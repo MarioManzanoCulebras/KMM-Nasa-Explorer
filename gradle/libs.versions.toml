@@ -6,13 +6,14 @@ compose-plugin = "1.5.10"
 compose-compiler = "1.5.4"
 compose-material3 = "1.1.2"
 androidx-activityCompose = "1.8.0"
-io-ktor = "2.1.2"
+ktor = "2.3.7"
 koin = "3.5.0"
 io-arrow-kt = "1.2.0"
 kotlinx-datetime = "0.5.0"
 org-jetbrains-kotlinx = "1.6.4"
 androidx-lifecycle = "2.5.1"
 kamel = "0.9.1"
+voyager = "1.0.0-rc05"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -23,16 +24,14 @@ compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview"
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
 
-io-ktor-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "io-ktor" }
-io-ktor-ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "io-ktor" }
-io-ktor-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "io-ktor" }
-io-ktor-ktor-serialization-gson = { module = "io.ktor:ktor-serialization-gson", version.ref = "io-ktor" }
-io-ktor-ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "io-ktor" }
-io-ktor-ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "io-ktor" }
-io-ktor-ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "io-ktor" }
-io-ktor-ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "io-ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-gson = { module = "io.ktor:ktor-serialization-gson", version.ref = "ktor" }
+ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 
 io-arrow-kt-arrow-continuations = { module = "io.arrow-kt:arrow-continuations", version.ref = "io-arrow-kt" }
@@ -50,7 +49,10 @@ org-jetbrains-kotlinx-kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-c
 
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
+
 media-kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamel" }
+
+voyager = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -61,10 +63,6 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 
 [bundles]
-ktor = [
-    "io-ktor-ktor-client-core", "io-ktor-ktor-client-content-negotiation", "io-ktor-ktor-serialization-kotlinx-json"
-]
-
 arrow = [
     "io-arrow-kt-arrow-continuations", "io-arrow-kt-arrow-core"
 ]

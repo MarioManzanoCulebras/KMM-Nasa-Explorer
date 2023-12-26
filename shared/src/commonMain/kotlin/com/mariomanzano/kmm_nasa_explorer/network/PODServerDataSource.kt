@@ -16,7 +16,7 @@ class PODServerDataSource(
     override suspend fun findPODDay(date: String): Either<Error, PictureOfDayItem> =
         tryCall {
             dailyPicturesService
-                .getPictureOfTheDay(dateTime.getFormattedDate(date, "dd.MM.yyyy"))
+                .getPictureOfTheDay(date)
                 .asPictureOfTheDayItem()
         }
 
@@ -27,8 +27,8 @@ class PODServerDataSource(
         tryCall {
             dailyPicturesService
                 .getPicturesOfDateRange(
-                    startDate = dateTime.getFormattedDate(from, "dd.MM.yyyy"),
-                    endDate = dateTime.getFormattedDate(to, "dd.MM.yyyy")
+                    startDate = from,
+                    endDate = to
                 )
                 .map { it.asPictureOfTheDayItem() }
                 .sortedByDescending { it.date }

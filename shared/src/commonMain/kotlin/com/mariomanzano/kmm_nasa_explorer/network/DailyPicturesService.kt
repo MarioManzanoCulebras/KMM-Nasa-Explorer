@@ -21,12 +21,18 @@ class DailyPicturesServiceImpl :
     private val ktor: HttpClient by inject()
     override suspend fun getPictureOfTheDay(date: String): ApiAPOD {
         return ktor.get("/planetary/apod") {
+            url {
+                parameters.append("api_key", "zHElzURyfsLM8SE1NLZTsoqjmjbg41vwFkVEpebG")
+            }
             parameter("date", date)
         }.body()
     }
 
     override suspend fun getPicturesOfDateRange(startDate: String, endDate: String): List<ApiAPOD> {
         return ktor.get("/planetary/apod") {
+            url {
+                parameters.append("api_key", "zHElzURyfsLM8SE1NLZTsoqjmjbg41vwFkVEpebG")
+            }
             parameter("start_date", startDate)
             parameter("end_date", endDate)
         }.body()

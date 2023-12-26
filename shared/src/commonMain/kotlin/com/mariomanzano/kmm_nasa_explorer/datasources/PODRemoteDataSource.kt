@@ -19,7 +19,7 @@ interface PODRemoteDataSource {
     suspend fun findPODitems(
         from: String = Clock.System.now().minus(
             59,
-            DateTimeUnit.MONTH,
+            DateTimeUnit.DAY,
             TimeZone.currentSystemDefault()
         ).toLocalDateTime(
             TimeZone.currentSystemDefault()

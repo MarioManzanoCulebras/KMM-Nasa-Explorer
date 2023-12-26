@@ -7,8 +7,12 @@ class DailyPicturesRepository(
     private val remoteDataSource: PODRemoteDataSource
 ) {
 
-    val localList: List<PictureOfDayItem>? = null
+    var localList: MutableList<PictureOfDayItem> = mutableListOf()
 
-    fun findById(id: Int): PictureOfDayItem? = localList?.find { it.id == id }
-    suspend fun requestPODList() = remoteDataSource.findPODitems()
+    fun findById(id: Int): PictureOfDayItem? = localList.find { it.id == id }
+    suspend fun requestPODList() = remoteDataSource.findPODitems().also {
+        it.getOrNull()?.forEachIndexed { index, pictureOfDayItem ->
+            localList.add(pictureOfDayItem.apply { id = index })
+        }
+    }
 }

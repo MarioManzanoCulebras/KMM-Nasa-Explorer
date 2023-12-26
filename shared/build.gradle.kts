@@ -30,7 +30,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.bundles.ktor)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.gson)
+                implementation(libs.ktor.client.negotiation)
                 implementation(libs.koin.core)
                 implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
                 implementation(libs.bundles.arrow)
@@ -41,6 +43,7 @@ kotlin {
                 api(compose.material)
                 api(compose.ui)
                 implementation(compose.materialIconsExtended)
+                implementation(libs.voyager)
             }
         }
         commonTest.dependencies {
@@ -55,14 +58,16 @@ kotlin {
         val androidMain by getting {
             dependsOn(commonComposeKmpMain)
             dependencies {
+                implementation(libs.ktor.client.okhttp)
                 implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.koin.android)
             }
         }
 
         val iosMain by getting {
             dependsOn(commonComposeKmpMain)
             dependencies {
-                implementation(libs.io.ktor.ktor.client.darwin)
+                implementation(libs.ktor.client.darwin)
             }
         }
     }

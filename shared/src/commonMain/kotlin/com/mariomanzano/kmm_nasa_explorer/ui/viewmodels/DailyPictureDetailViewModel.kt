@@ -1,5 +1,6 @@
 package com.mariomanzano.kmm_nasa_explorer.ui.viewmodels
 
+import cafe.adriel.voyager.core.model.ScreenModel
 import com.mariomanzano.kmm_nasa_explorer.Error
 import com.mariomanzano.kmm_nasa_explorer.domain.PictureOfDayItem
 import com.mariomanzano.kmm_nasa_explorer.usecases.FindPODUseCase
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.update
 class DailyPictureDetailViewModel(
     itemId: Int,
     findPODUseCase: FindPODUseCase
-) : ViewModel() {
+) : ViewModel(), ScreenModel {
     private val _state = MutableStateFlow(UiState())
     val state = _state.asStateFlow()
 

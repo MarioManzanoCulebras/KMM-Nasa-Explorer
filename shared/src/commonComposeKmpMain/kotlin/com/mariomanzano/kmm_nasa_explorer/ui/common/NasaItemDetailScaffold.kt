@@ -1,4 +1,4 @@
-package com.mariomanzano.kmm_nada_explorer.ui.common
+package com.mariomanzano.kmm_nasa_explorer.ui.common
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.FabPosition

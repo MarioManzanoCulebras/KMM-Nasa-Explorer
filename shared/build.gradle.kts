@@ -6,6 +6,9 @@ plugins {
     alias(libs.plugins.compose)
 }
 
+// CocoaPods requires the podspec to have a version.
+version = "1.0"
+
 kotlin {
     kotlin.applyDefaultHierarchyTemplate()
     androidTarget {
@@ -23,7 +26,6 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
-            isStatic = true
         }
     }
 
@@ -75,8 +77,14 @@ kotlin {
 
 android {
     namespace = "com.mariomanzano.kmm_nasa_explorer"
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     compileSdk = 34
     defaultConfig {
         minSdk = 26
+        targetSdk = 34
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }

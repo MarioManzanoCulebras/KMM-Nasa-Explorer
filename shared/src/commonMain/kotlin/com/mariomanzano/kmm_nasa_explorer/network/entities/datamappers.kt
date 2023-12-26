@@ -8,6 +8,5 @@ fun ApiAPOD.asPictureOfTheDayItem() = PictureOfDayItem(
         date = date,
         description = explanation ?: "",
         url = url ?: "",
-        copyRight = copyRight ?: "",
         mediaType = media_type ?: ""
 )

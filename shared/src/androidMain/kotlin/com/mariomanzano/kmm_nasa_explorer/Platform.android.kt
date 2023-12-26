@@ -3,10 +3,12 @@ package com.mariomanzano.kmm_nasa_explorer
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
-import io.ktor.serialization.gson.gson
-import java.util.concurrent.TimeUnit
+import io.ktor.client.request.header
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 
 class AndroidPlatform : Platform {
     override val name: String = "Android ${android.os.Build.VERSION.SDK_INT}"
@@ -15,18 +17,20 @@ class AndroidPlatform : Platform {
 actual fun getPlatform(): Platform = AndroidPlatform()
 
 actual fun httpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(OkHttp) {
-    config(this)
-    expectSuccess = true
-    engine {
-        config {
-            retryOnConnectionFailure(true)
-            connectTimeout(0, TimeUnit.SECONDS)
-        }
-        this@HttpClient.defaultRequest {
-            url("https://api.nasa.gov/")
-        }
-        this@HttpClient.install(ContentNegotiation) {
-            gson()
-        }
+    install(HttpTimeout) {
+        socketTimeoutMillis = 60_000
+        requestTimeoutMillis = 60_000
+    }
+    defaultRequest {
+        header("Content-Type", "application/json")
+        url("https://api.nasa.gov/")
+    }
+    install(ContentNegotiation) {
+        json(Json {
+            prettyPrint = true
+            isLenient = true
+            ignoreUnknownKeys = true
+            explicitNulls = false
+        })
     }
 }

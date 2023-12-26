@@ -8,6 +8,5 @@ data class PictureOfDayItem(
     override val url: String,
     override val mediaType: String,
     override var favorite: Boolean = false,
-    override val type: String = "dailyPicture",
-    val copyRight: String
+    override val type: String = "dailyPicture"
 ) : NasaItem

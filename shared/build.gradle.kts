@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.compose)
+    kotlin("plugin.serialization") version "1.9.21"
 }
 
 // CocoaPods requires the podspec to have a version.
@@ -33,6 +34,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.ktor.client.json)
+                implementation(libs.ktor.client.negotiation)
+                implementation(libs.ktor.client.encoding)
                 implementation(libs.koin.core)
                 implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
                 implementation(libs.bundles.arrow)
@@ -59,8 +64,6 @@ kotlin {
             dependsOn(commonComposeKmpMain)
             dependencies {
                 implementation(libs.ktor.client.okhttp)
-                implementation(libs.ktor.client.gson)
-                implementation(libs.ktor.client.negotiation)
                 implementation(libs.androidx.lifecycle.viewmodel)
                 implementation(libs.koin.android)
             }

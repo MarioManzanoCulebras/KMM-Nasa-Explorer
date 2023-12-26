@@ -31,8 +31,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.gson)
-                implementation(libs.ktor.client.negotiation)
                 implementation(libs.koin.core)
                 implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
                 implementation(libs.bundles.arrow)
@@ -59,6 +57,8 @@ kotlin {
             dependsOn(commonComposeKmpMain)
             dependencies {
                 implementation(libs.ktor.client.okhttp)
+                implementation(libs.ktor.client.gson)
+                implementation(libs.ktor.client.negotiation)
                 implementation(libs.androidx.lifecycle.viewmodel)
                 implementation(libs.koin.android)
             }

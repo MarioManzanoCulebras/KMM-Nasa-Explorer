@@ -38,6 +38,7 @@ actual fun DailyPictureDetailScreen(viewModel: DailyPictureDetailViewModel, onCl
     val state by viewModel.state.collectAsState()
 
     NasaItemDetailScreen(
-        nasaItem = state.dailyPicture
-    ) { /* TODO: Complete when database is available */ }
+        nasaItem = state.dailyPicture,
+        onBack = onClose
+    )
 }

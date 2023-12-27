@@ -1,5 +1,7 @@
 package com.mariomanzano.kmm_nasa_explorer
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.painter.Painter
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.darwin.Darwin
@@ -35,4 +37,9 @@ actual fun httpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(Darwi
             explicitNulls = false
         })
     }
+}
+
+@Composable
+internal actual fun getArrowBack(): Painter {
+    TODO("Not yet implemented")
 }

@@ -31,11 +31,10 @@ import androidx.compose.ui.unit.sp
 import com.mariomanzano.kmm_nasa_explorer.domain.NasaItem
 
 @Composable
-fun NasaItemDetailScreen(nasaItem: NasaItem?, onFavoriteClick: () -> Unit = {}) {
+fun NasaItemDetailScreen(nasaItem: NasaItem?, onBack: () -> Unit = {}) {
     nasaItem?.let {
         NasaItemDetailScaffold(
-            nasaItem = it,
-            onFavoriteClick = onFavoriteClick
+            onBack = onBack
         ) { padding ->
             LazyColumn(
                 modifier = Modifier

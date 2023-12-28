@@ -20,7 +20,9 @@ import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mariomanzano.kmm_nasa_explorer.MR
 import com.mariomanzano.kmm_nasa_explorer.domain.NasaItem
+import com.mariomanzano.kmm_nasa_explorer.stringResource
 
 @Composable
 fun <T : NasaItem> NasaItemBottomPreview(item: T?, onGoToDetail: (T) -> Unit) {
@@ -61,7 +63,7 @@ fun <T : NasaItem> NasaItemBottomPreview(item: T?, onGoToDetail: (T) -> Unit) {
                 onClick = { onGoToDetail(item) },
                 modifier = Modifier.align(Alignment.End)
             ) {
-                Text(text = "Go to Detail" /* Todo : stringResource(id = R.string.go_to_detail)*/)
+                Text(text = stringResource(MR.strings.go_to_detail))
             }
         }
     } else {

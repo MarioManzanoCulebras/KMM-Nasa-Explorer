@@ -5,3 +5,9 @@ plugins {
     alias(libs.plugins.kotlinAndroid).apply(false)
     alias(libs.plugins.kotlinMultiplatform).apply(false)
 }
+
+buildscript {
+    dependencies {
+        classpath("dev.icerock.moko:resources-generator:0.22.3")
+    }
+}

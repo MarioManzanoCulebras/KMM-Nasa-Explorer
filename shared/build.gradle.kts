@@ -47,6 +47,8 @@ kotlin {
                 api(compose.foundation)
                 api(compose.material)
                 api(compose.ui)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.components.resources)
                 implementation(compose.materialIconsExtended)
                 implementation(libs.voyager)
             }
@@ -81,6 +83,8 @@ kotlin {
 android {
     namespace = "com.mariomanzano.kmm_nasa_explorer"
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].res.srcDirs("src/androidMain/res")
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
     compileSdk = 34
     defaultConfig {
         minSdk = 26

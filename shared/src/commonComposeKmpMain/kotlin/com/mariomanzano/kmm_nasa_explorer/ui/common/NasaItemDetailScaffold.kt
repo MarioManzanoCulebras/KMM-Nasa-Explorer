@@ -12,7 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mariomanzano.kmm_nasa_explorer.getArrowBack
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun NasaItemDetailScaffold(
     onBack: () -> Unit,
@@ -26,7 +29,7 @@ fun NasaItemDetailScaffold(
                     onClick = { onBack() }
                 ) {
                     Image(
-                        painter = getArrowBack(),
+                        painter = painterResource("arrow_ios_back.xml"),
                         contentDescription = null
                     )
                 }

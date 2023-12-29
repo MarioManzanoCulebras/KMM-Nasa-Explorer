@@ -11,6 +11,7 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import platform.UIKit.UIDevice
 
 class IOSPlatform : Platform {
@@ -39,7 +40,8 @@ actual fun httpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(Darwi
     }
 }
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 internal actual fun getArrowBack(): Painter {
-    TODO("Not yet implemented")
+    return org.jetbrains.compose.resources.painterResource("arrowBack.png")
 }

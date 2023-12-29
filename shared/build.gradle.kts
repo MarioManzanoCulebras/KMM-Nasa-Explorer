@@ -8,9 +8,6 @@ plugins {
     id("dev.icerock.mobile.multiplatform-resources")
 }
 
-// CocoaPods requires the podspec to have a version.
-version = "1.0"
-
 kotlin {
     kotlin.applyDefaultHierarchyTemplate()
     androidTarget {
@@ -28,6 +25,7 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
+            isStatic = true
             export("dev.icerock.moko:resources:0.22.3")
             export("dev.icerock.moko:graphics:0.9.0")
         }
@@ -50,6 +48,8 @@ kotlin {
                 api(compose.foundation)
                 api(compose.material)
                 api(compose.ui)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.components.resources)
                 api("dev.icerock.moko:resources:0.22.3")
                 implementation(compose.materialIconsExtended)
                 implementation(libs.voyager)
@@ -103,6 +103,8 @@ kotlin {
 android {
     namespace = "com.mariomanzano.kmm_nasa_explorer"
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].res.srcDirs("src/androidMain/res")
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
     compileSdk = 34
     defaultConfig {
         minSdk = 26

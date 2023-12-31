@@ -1,7 +1,7 @@
 package com.mariomanzano.kmm_nasa_explorer.shared.cache
 
+import app.cash.sqldelight.db.SqlDriver
 import com.mariomanzano.kmm_nasa_explorer.domain.PictureOfDayItem
-import com.squareup.sqldelight.db.SqlDriver
 
 class Database(sqlDriver: SqlDriver) {
     private val database = NasaDatabase(sqlDriver)
@@ -13,7 +13,9 @@ class Database(sqlDriver: SqlDriver) {
         }
     }
 
-    internal fun getAllPOD() = dbQuery.getAllPOD(::mapToDomainModel).executeAsList()
+    internal fun getAllPOD() = dbQuery.getAllPOD(::mapToDomainModel)
+
+    internal fun getAllFavoritePOD() = dbQuery.getAllFavoritePOD(::mapToDomainModel)
 
     internal fun insertPODList(list: List<PictureOfDayItem>) {
         dbQuery.transaction {
@@ -36,12 +38,25 @@ class Database(sqlDriver: SqlDriver) {
         )
     }
 
+    internal fun replacePOD(pod: PictureOfDayItem) {
+        dbQuery.replacePOD(
+            id = pod.id.toLong(),
+            date = pod.date,
+            title = pod.title,
+            description = pod.description,
+            url = pod.url,
+            mediaType = pod.mediaType,
+            favorite = pod.favorite,
+            type = pod.type
+        )
+    }
+
     internal fun findPODById(id: Int) =
-        dbQuery.findPODById(id.toLong(), ::mapToDomainModel).executeAsOne()
+        dbQuery.findPODById(id.toLong(), ::mapToDomainModel)
 
     internal fun getPODCount() = dbQuery.getPODCount()
 
-    internal fun updatePOD(id: Int, favorite: Boolean) = dbQuery.updatePOD(id.toLong(), favorite)
+    internal fun updatePOD(id: Int, favorite: Boolean) = dbQuery.updatePOD(favorite, id.toLong())
 
     private fun mapToDomainModel(
         id: Long,

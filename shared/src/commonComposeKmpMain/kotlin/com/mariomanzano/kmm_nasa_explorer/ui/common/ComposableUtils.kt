@@ -1,5 +1,6 @@
 package com.mariomanzano.kmm_nasa_explorer.ui.common
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,11 +13,34 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import io.ktor.http.Url
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+fun BuildLightIcon(
+    icon: ImageVector,
+    nasaIcon: NasaIcon? = null,
+    title: String? = null,
+) {
+    if (nasaIcon != null) {
+        Image(
+            painter = painterResource(nasaIcon.resourceId),
+            contentDescription = title,
+            colorFilter = ColorFilter.tint(Color.Companion.White)
+        )
+    } else {
+        Icon(imageVector = icon, tint = Color.Companion.White, contentDescription = title)
+    }
+}
 
 @Composable
 fun NasaImageWithLoader(

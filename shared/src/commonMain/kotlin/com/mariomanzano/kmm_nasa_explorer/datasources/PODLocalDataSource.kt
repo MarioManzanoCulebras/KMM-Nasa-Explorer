@@ -11,5 +11,7 @@ interface PODLocalDataSource {
     fun findPODById(id: Int): Flow<PictureOfDayItem>
     suspend fun savePODFavoriteList(items: List<PictureOfDayItem>): Error?
     suspend fun savePODList(items: List<PictureOfDayItem>): Error?
-    suspend fun updatePODList(id: Int, favorite: Boolean): Error?
+    suspend fun savePOD(item: PictureOfDayItem): Error?
+
+    suspend fun updatePOD(id: Int, favorite: Boolean): Error?
 }

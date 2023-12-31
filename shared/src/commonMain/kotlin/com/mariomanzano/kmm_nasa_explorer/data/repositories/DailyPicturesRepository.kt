@@ -28,8 +28,12 @@ class DailyPicturesRepository(
         }
     }
 
+    suspend fun savePOD(pictureOfDayItem: PictureOfDayItem): Error? {
+        return localDataSource.savePOD(pictureOfDayItem)
+    }
+
     suspend fun switchFavorite(pictureOfDayItem: PictureOfDayItem): Error? {
         val updatedPOD = pictureOfDayItem.copy(favorite = !pictureOfDayItem.favorite)
-        return localDataSource.savePODFavoriteList(listOf(updatedPOD))
+        return localDataSource.updatePOD(updatedPOD.id, updatedPOD.favorite)
     }
 }

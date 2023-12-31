@@ -39,6 +39,7 @@ actual fun DailyPictureDetailScreen(viewModel: DailyPictureDetailViewModel, onCl
 
     NasaItemDetailScreen(
         nasaItem = state.dailyPicture,
-        onBack = onClose
+        onBack = onClose,
+        onFavoriteClick = { viewModel.onFavoriteClicked() }
     )
 }

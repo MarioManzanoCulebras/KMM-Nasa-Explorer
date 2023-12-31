@@ -1,27 +1,38 @@
 package com.mariomanzano.kmm_nasa_explorer.data.database
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOne
 import com.mariomanzano.kmm_nasa_explorer.Error
 import com.mariomanzano.kmm_nasa_explorer.datasources.PODLocalDataSource
 import com.mariomanzano.kmm_nasa_explorer.domain.PictureOfDayItem
 import com.mariomanzano.kmm_nasa_explorer.network.tryCall
 import com.mariomanzano.kmm_nasa_explorer.shared.cache.Database
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 
 class PODRoomDataSource(private val database: Database) : PODLocalDataSource {
 
     override val podList: Flow<List<PictureOfDayItem>> =
-        flowOf(database.getAllPOD())
+        database.getAllPOD().asFlow().mapToList(Dispatchers.Default)
 
     override val podListFavorite: Flow<List<PictureOfDayItem>> =
-        flowOf(database.getAllPOD().filter { it.favorite })
+        database.getAllFavoritePOD().asFlow().mapToList(Dispatchers.Default)
 
     override fun findPODById(id: Int): Flow<PictureOfDayItem> =
-        flowOf(database.findPODById(id))
+        database.findPODById(id).asFlow().mapToOne(Dispatchers.Default)
 
     override suspend fun savePODFavoriteList(items: List<PictureOfDayItem>): Error? =
         tryCall {
             database.insertPODList(items)
+        }.fold(
+            ifLeft = { it },
+            ifRight = { null }
+        )
+
+    override suspend fun updatePOD(id: Int, favorite: Boolean): Error? =
+        tryCall {
+            database.updatePOD(id, favorite)
         }.fold(
             ifLeft = { it },
             ifRight = { null }
@@ -36,9 +47,9 @@ class PODRoomDataSource(private val database: Database) : PODLocalDataSource {
             ifRight = { null }
         )
 
-    override suspend fun updatePODList(id: Int, favorite: Boolean): Error? =
+    override suspend fun savePOD(item: PictureOfDayItem): Error? =
         tryCall {
-            database.updatePOD(id, favorite)
+            database.replacePOD(item)
         }.fold(
             ifLeft = { it },
             ifRight = { null }

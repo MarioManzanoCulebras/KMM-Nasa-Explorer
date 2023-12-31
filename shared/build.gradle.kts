@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.compose)
     kotlin("plugin.serialization") version "1.9.21"
-    id("com.squareup.sqldelight") version "1.5.5"
+    id("app.cash.sqldelight") version "2.0.1"
 }
 
 // CocoaPods requires the podspec to have a version.
@@ -53,6 +53,8 @@ kotlin {
                 implementation(compose.materialIconsExtended)
                 implementation(libs.voyager)
                 implementation(libs.sqldelight.runtime)
+                implementation(libs.sqldelight.coroutines)
+                implementation(libs.sqldelight.adapters)
             }
         }
         commonTest.dependencies {
@@ -101,8 +103,10 @@ android {
 }
 
 sqldelight {
-    database("NasaDatabase") {
-        packageName = "com.mariomanzano.kmm_nasa_explorer.shared.cache"
+    databases {
+        create("NasaDatabase") {
+            packageName.set("com.mariomanzano.kmm_nasa_explorer.shared.cache")
+        }
     }
 }
 

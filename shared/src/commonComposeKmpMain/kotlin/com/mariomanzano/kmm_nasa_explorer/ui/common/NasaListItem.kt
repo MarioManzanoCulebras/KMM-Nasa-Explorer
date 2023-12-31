@@ -15,6 +15,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
@@ -68,6 +69,10 @@ fun <T : NasaItem> NasaListItem(
                         FooterRow(nasaItem = nasaItem, onItemMore = onItemMore)
                     }
                 }
+                if (nasaItem.favorite) BuildLightIcon(
+                    icon = Icons.Default.Favorite,
+                    nasaIcon = NasaIcon.FavoriteOn
+                )
             }
         }
         if (!showFooterInside) {

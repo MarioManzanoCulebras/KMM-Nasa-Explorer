@@ -1,7 +1,7 @@
-import java.lang.Boolean;
+import kotlin.Boolean;
 
 CREATE TABLE DbPOD (
-    id INTEGER NOT NULL,
+    id INTEGER PRIMARY KEY NOT NULL,
     date TEXT NOT NULL,
     title TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -17,6 +17,9 @@ DELETE FROM DbPOD;
 getAllPOD:
 SELECT * FROM DbPOD;
 
+getAllFavoritePOD:
+SELECT * FROM DbPOD WHERE favorite = 1;
+
 findPODById:
 SELECT * FROM DbPOD WHERE id = ?;
 
@@ -27,5 +30,9 @@ insertPODOnDb:
 INSERT INTO DbPOD(id, date, title, description, url, mediaType, favorite, type)
 VALUES (?, ?,?,?,?,?,?,?);
 
+replacePOD:
+REPLACE INTO DbPOD(id, date, title, description, url, mediaType, favorite, type)
+VALUES (?, ?,?,?,?,?,?,?);
+
 updatePOD:
-UPDATE DbPOD SET id = ? WHERE favorite = ?;
+UPDATE DbPOD SET favorite = ? WHERE id = ?;

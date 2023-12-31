@@ -1,8 +1,8 @@
 package com.mariomanzano.kmm_nasa_explorer
 
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.mariomanzano.kmm_nasa_explorer.shared.cache.NasaDatabase
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.darwin.Darwin
@@ -11,6 +11,7 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -29,6 +30,7 @@ actual val platformModule: Module = module {
 
 actual fun getPlatform(): Platform = IOSPlatform()
 
+@OptIn(ExperimentalSerializationApi::class)
 actual fun httpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(Darwin) {
     install(HttpTimeout) {
         socketTimeoutMillis = 60_000

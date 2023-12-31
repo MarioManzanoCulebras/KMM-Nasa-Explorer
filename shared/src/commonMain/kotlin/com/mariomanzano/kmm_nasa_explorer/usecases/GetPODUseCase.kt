@@ -4,5 +4,5 @@ import com.mariomanzano.kmm_nasa_explorer.data.repositories.DailyPicturesReposit
 
 class GetPODUseCase(private val repository: DailyPicturesRepository) {
 
-    operator fun invoke() = repository.localList
+    operator fun invoke() = repository.podList
 }

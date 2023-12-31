@@ -14,6 +14,7 @@ org-jetbrains-kotlinx = "1.6.4"
 androidx-lifecycle = "2.5.1"
 kamel = "0.9.1"
 voyager = "1.0.0-rc05"
+sqldelight = "1.5.5"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -55,6 +56,10 @@ androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmode
 media-kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamel" }
 
 voyager = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+
+sqldelight-runtime = { module = "com.squareup.sqldelight:runtime", version.ref = "sqldelight" }
+sqldelight-android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-native-driver = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqldelight" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

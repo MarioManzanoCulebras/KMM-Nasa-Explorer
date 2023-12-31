@@ -1,0 +1,31 @@
+import java.lang.Boolean;
+
+CREATE TABLE DbPOD (
+    id INTEGER NOT NULL,
+    date TEXT NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    url TEXT NOT NULL,
+    mediaType TEXT NOT NULL,
+    favorite INTEGER AS Boolean DEFAULT 0 NOT NULL,
+    type TEXT NOT NULL
+);
+
+removeAllPOD:
+DELETE FROM DbPOD;
+
+getAllPOD:
+SELECT * FROM DbPOD;
+
+findPODById:
+SELECT * FROM DbPOD WHERE id = ?;
+
+getPODCount:
+SELECT COUNT(id) FROM DbPOD;
+
+insertPODOnDb:
+INSERT INTO DbPOD(id, date, title, description, url, mediaType, favorite, type)
+VALUES (?, ?,?,?,?,?,?,?);
+
+updatePOD:
+UPDATE DbPOD SET id = ? WHERE favorite = ?;

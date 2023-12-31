@@ -15,7 +15,7 @@ data class DailyPictureDetailScreen(val id: Int) : Screen, KoinComponent {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         DailyPictureDetailScreen(
-            viewModel = rememberScreenModel { DailyPictureDetailViewModel(id, get()) },
+            viewModel = rememberScreenModel { DailyPictureDetailViewModel(id, get(), get()) },
             onClose = { navigator.pop() })
     }
 

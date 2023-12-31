@@ -1,5 +1,8 @@
 package com.mariomanzano.kmm_nasa_explorer
 
+import com.mariomanzano.kmm_nasa_explorer.shared.cache.NasaDatabase
+import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.darwin.Darwin
@@ -9,11 +12,19 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.core.module.Module
+import org.koin.dsl.module
 import platform.UIKit.UIDevice
 
 class IOSPlatform : Platform {
     override val name: String =
         UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
+}
+
+actual val platformModule: Module = module {
+    single<SqlDriver> {
+        NativeSqliteDriver(NasaDatabase.Schema, "NasaDatabase.db")
+    }
 }
 
 actual fun getPlatform(): Platform = IOSPlatform()

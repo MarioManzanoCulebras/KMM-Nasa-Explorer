@@ -1,20 +1,20 @@
 package com.mariomanzano.kmm_nasa_explorer
 
 import android.app.Application
-import com.mariomanzano.kmm_nasa_explorer.di.appModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.GlobalContext.startKoin
+import android.content.Context
+import initKoin
+import org.koin.dsl.module
 
 class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        startKoin {
-            androidContext(this@MainApplication)
-            androidLogger()
-            modules(appModule())
-        }
+        initKoin(
+            listOf(
+                module {
+                    single<Context> { this@MainApplication }
+                }
+            )
+        )
     }
 }

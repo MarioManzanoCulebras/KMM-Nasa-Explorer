@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.compose)
     kotlin("plugin.serialization") version "1.9.21"
+    id("com.squareup.sqldelight") version "1.5.5"
 }
 
 // CocoaPods requires the podspec to have a version.
@@ -51,6 +52,7 @@ kotlin {
                 implementation(compose.components.resources)
                 implementation(compose.materialIconsExtended)
                 implementation(libs.voyager)
+                implementation(libs.sqldelight.runtime)
             }
         }
         commonTest.dependencies {
@@ -68,6 +70,7 @@ kotlin {
                 implementation(libs.ktor.client.okhttp)
                 implementation(libs.androidx.lifecycle.viewmodel)
                 implementation(libs.koin.android)
+                implementation(libs.sqldelight.android.driver)
             }
         }
 
@@ -75,6 +78,7 @@ kotlin {
             dependsOn(commonComposeKmpMain)
             dependencies {
                 implementation(libs.ktor.client.darwin)
+                implementation(libs.sqldelight.native.driver)
             }
         }
     }
@@ -95,3 +99,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
+
+sqldelight {
+    database("NasaDatabase") {
+        packageName = "com.mariomanzano.kmm_nasa_explorer.shared.cache"
+    }
+}
+

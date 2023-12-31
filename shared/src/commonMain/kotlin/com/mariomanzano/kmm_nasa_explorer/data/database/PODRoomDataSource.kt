@@ -9,18 +9,22 @@ import com.mariomanzano.kmm_nasa_explorer.domain.PictureOfDayItem
 import com.mariomanzano.kmm_nasa_explorer.network.tryCall
 import com.mariomanzano.kmm_nasa_explorer.shared.cache.Database
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 
 class PODRoomDataSource(private val database: Database) : PODLocalDataSource {
 
     override val podList: Flow<List<PictureOfDayItem>> =
-        database.getAllPOD().asFlow().mapToList(Dispatchers.Default)
+        database.getAllPOD().asFlow().mapToList(Dispatchers.IO)
 
     override val podListFavorite: Flow<List<PictureOfDayItem>> =
-        database.getAllFavoritePOD().asFlow().mapToList(Dispatchers.Default)
+        database.getAllFavoritePOD().asFlow().mapToList(Dispatchers.IO)
 
     override fun findPODById(id: Int): Flow<PictureOfDayItem> =
-        database.findPODById(id).asFlow().mapToOne(Dispatchers.Default)
+        database.findPODById(id).asFlow().mapToOne(Dispatchers.IO)
+
+    override fun findByIdAndType(id: Int, type: String): Flow<PictureOfDayItem> =
+        database.findPODById(id).asFlow().mapToOne(Dispatchers.IO)
 
     override suspend fun savePODFavoriteList(items: List<PictureOfDayItem>): Error? =
         tryCall {

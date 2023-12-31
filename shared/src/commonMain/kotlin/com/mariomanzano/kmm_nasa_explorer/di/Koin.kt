@@ -11,7 +11,11 @@ import com.mariomanzano.kmm_nasa_explorer.network.PODServerDataSource
 import com.mariomanzano.kmm_nasa_explorer.platformModule
 import com.mariomanzano.kmm_nasa_explorer.shared.cache.Database
 import com.mariomanzano.kmm_nasa_explorer.ui.viewmodels.DailyPictureViewModel
+import com.mariomanzano.kmm_nasa_explorer.ui.viewmodels.FavoriteDetailViewModel
+import com.mariomanzano.kmm_nasa_explorer.ui.viewmodels.FavoriteViewModel
+import com.mariomanzano.kmm_nasa_explorer.usecases.FindFavoriteUseCase
 import com.mariomanzano.kmm_nasa_explorer.usecases.FindPODUseCase
+import com.mariomanzano.kmm_nasa_explorer.usecases.GetFavoritesUseCase
 import com.mariomanzano.kmm_nasa_explorer.usecases.GetPODUseCase
 import com.mariomanzano.kmm_nasa_explorer.usecases.RequestPODListUseCase
 import com.mariomanzano.kmm_nasa_explorer.usecases.SwitchItemToFavoriteUseCase
@@ -33,5 +37,9 @@ val appModule = module {
     singleOf(::FindPODUseCase) { bind<FindPODUseCase>() }
     singleOf(::RequestPODListUseCase) { bind<RequestPODListUseCase>() }
     singleOf(::SwitchItemToFavoriteUseCase) { bind<SwitchItemToFavoriteUseCase>() }
+    singleOf(::GetFavoritesUseCase) { bind<GetFavoritesUseCase>() }
+    singleOf(::FindFavoriteUseCase) { bind<FindFavoriteUseCase>() }
     singleOf(::DailyPictureViewModel) { bind<DailyPictureViewModel>() }
+    singleOf(::FavoriteViewModel) { bind<FavoriteViewModel>() }
+    singleOf(::FavoriteDetailViewModel) { bind<FavoriteDetailViewModel>() }
 }

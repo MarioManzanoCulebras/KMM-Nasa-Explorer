@@ -106,12 +106,6 @@ fun PODItemsListScreen(
         val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
         val scope = rememberCoroutineScope()
 
-        /* Todo: BackHandler on multiplatform project
-        BackHandler(sheetState.isVisible) {
-            scope.launch { sheetState.hide() }
-        }
-        */
-
         ModalBottomSheetLayout(
             sheetContent = {
                 NasaItemBottomPreview(

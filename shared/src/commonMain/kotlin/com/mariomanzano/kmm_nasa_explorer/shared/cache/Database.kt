@@ -54,6 +54,9 @@ class Database(sqlDriver: SqlDriver) {
     internal fun findPODById(id: Int) =
         dbQuery.findPODById(id.toLong(), ::mapToDomainModel)
 
+    internal fun findByIdAndType(id: Int, type: String) =
+        dbQuery.findByIdAndType(id.toLong(), type, ::mapToDomainModel)
+
     internal fun getPODCount() = dbQuery.getPODCount()
 
     internal fun updatePOD(id: Int, favorite: Boolean) = dbQuery.updatePOD(favorite, id.toLong())

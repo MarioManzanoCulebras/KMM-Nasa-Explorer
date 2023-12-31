@@ -1,14 +1,15 @@
 import kotlin.Boolean;
 
 CREATE TABLE DbPOD (
-    id INTEGER PRIMARY KEY NOT NULL,
+    id INTEGER NOT NULL,
     date TEXT NOT NULL,
     title TEXT NOT NULL,
     description TEXT NOT NULL,
     url TEXT NOT NULL,
     mediaType TEXT NOT NULL,
     favorite INTEGER AS Boolean DEFAULT 0 NOT NULL,
-    type TEXT NOT NULL
+    type TEXT NOT NULL,
+    PRIMARY KEY (id, type)
 );
 
 removeAllPOD:
@@ -22,6 +23,9 @@ SELECT * FROM DbPOD WHERE favorite = 1;
 
 findPODById:
 SELECT * FROM DbPOD WHERE id = ?;
+
+findByIdAndType:
+SELECT * FROM DbPOD WHERE id = ? AND type = ?;
 
 getPODCount:
 SELECT COUNT(id) FROM DbPOD;

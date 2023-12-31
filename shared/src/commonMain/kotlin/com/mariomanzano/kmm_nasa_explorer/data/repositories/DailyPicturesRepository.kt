@@ -16,7 +16,11 @@ class DailyPicturesRepository(
 ) {
 
     val podList = localDataSource.podList
+    val podListFavorite = localDataSource.podListFavorite
     fun findById(id: Int): Flow<PictureOfDayItem> = localDataSource.findPODById(id)
+
+    fun findByIdAndType(id: Int, type: String): Flow<PictureOfDayItem> =
+        localDataSource.findByIdAndType(id, type)
 
     suspend fun requestPODList(): Either<Error, List<PictureOfDayItem>?> {
         val items = remoteDataSource.findPODitems().getOrNull()

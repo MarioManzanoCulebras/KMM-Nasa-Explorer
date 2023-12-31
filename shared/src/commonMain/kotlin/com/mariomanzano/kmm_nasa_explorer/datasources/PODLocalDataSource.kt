@@ -9,6 +9,8 @@ interface PODLocalDataSource {
     val podListFavorite: Flow<List<PictureOfDayItem>>
 
     fun findPODById(id: Int): Flow<PictureOfDayItem>
+
+    fun findByIdAndType(id: Int, type: String): Flow<PictureOfDayItem>
     suspend fun savePODFavoriteList(items: List<PictureOfDayItem>): Error?
     suspend fun savePODList(items: List<PictureOfDayItem>): Error?
     suspend fun savePOD(item: PictureOfDayItem): Error?

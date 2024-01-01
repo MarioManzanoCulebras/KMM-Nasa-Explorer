@@ -60,7 +60,7 @@ fun <T : NasaItem> NasaItemBottomPreview(item: T?, onGoToDetail: (T) -> Unit) {
             )
             Button(
                 onClick = { onGoToDetail(item) },
-                modifier = Modifier.align(Alignment.End)
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(text = stringResource("go_to_detail"))
             }

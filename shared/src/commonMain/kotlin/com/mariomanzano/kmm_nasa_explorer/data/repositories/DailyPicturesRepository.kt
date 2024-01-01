@@ -22,6 +22,16 @@ class DailyPicturesRepository(
     fun findByIdAndType(id: Int, type: String): Flow<PictureOfDayItem> =
         localDataSource.findByIdAndType(id, type)
 
+    suspend fun requestPODSingleDay(date: String): Either<Error, PictureOfDayItem?> {
+        val item = remoteDataSource.findPODDay(date).getOrNull()
+        return if (item != null) {
+            localDataSource.savePOD(item)
+            item.right()
+        } else {
+            Error.NoData.left()
+        }
+    }
+
     suspend fun requestPODList(): Either<Error, List<PictureOfDayItem>?> {
         val items = remoteDataSource.findPODitems().getOrNull()
         return if (items.isNullOrEmpty()) {

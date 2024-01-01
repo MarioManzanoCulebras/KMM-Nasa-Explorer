@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,6 +21,7 @@ import com.mariomanzano.kmm_nasa_explorer.domain.NasaItem
 fun NasaItemDetailScaffold(
     nasaItem: NasaItem? = null,
     onBack: (() -> Unit)? = null,
+    onRefresh: (() -> Unit)? = null,
     onFavoriteClick: (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit
 ) {
@@ -32,6 +34,14 @@ fun NasaItemDetailScaffold(
                         BuildLightIcon(
                             icon = Icons.Default.Info,
                             nasaIcon = NasaIcon.ArrowBack
+                        )
+                    }
+                } else if (onRefresh != null) {
+                    Spacer(modifier = Modifier.width(12.dp))
+                    FloatingActionButton(onClick = { onRefresh.invoke() }) {
+                        BuildLightIcon(
+                            icon = Icons.Default.Refresh,
+                            nasaIcon = NasaIcon.Refresh
                         )
                     }
                 }

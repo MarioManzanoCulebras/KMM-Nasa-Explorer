@@ -18,6 +18,7 @@ import com.mariomanzano.kmm_nasa_explorer.usecases.FindPODUseCase
 import com.mariomanzano.kmm_nasa_explorer.usecases.GetFavoritesUseCase
 import com.mariomanzano.kmm_nasa_explorer.usecases.GetPODUseCase
 import com.mariomanzano.kmm_nasa_explorer.usecases.RequestPODListUseCase
+import com.mariomanzano.kmm_nasa_explorer.usecases.RequestPODSingleDayUseCase
 import com.mariomanzano.kmm_nasa_explorer.usecases.SwitchItemToFavoriteUseCase
 import io.ktor.client.HttpClient
 import org.koin.core.module.dsl.bind
@@ -36,6 +37,7 @@ val appModule = module {
     singleOf(::GetPODUseCase) { bind<GetPODUseCase>() }
     singleOf(::FindPODUseCase) { bind<FindPODUseCase>() }
     singleOf(::RequestPODListUseCase) { bind<RequestPODListUseCase>() }
+    singleOf(::RequestPODSingleDayUseCase) { bind<RequestPODSingleDayUseCase>() }
     singleOf(::SwitchItemToFavoriteUseCase) { bind<SwitchItemToFavoriteUseCase>() }
     singleOf(::GetFavoritesUseCase) { bind<GetFavoritesUseCase>() }
     singleOf(::FindFavoriteUseCase) { bind<FindFavoriteUseCase>() }

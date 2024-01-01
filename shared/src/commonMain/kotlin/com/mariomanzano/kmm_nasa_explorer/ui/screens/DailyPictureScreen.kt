@@ -16,9 +16,10 @@ object DailyPictureScreen : Screen, KoinComponent {
         val viewModel: DailyPictureViewModel by inject()
         DailyPicture(
             onClick = { pictureOfTheDay ->
+                viewModel.checkIfShowRefresh()
                 navigator.push(DailyPictureDetailScreen(pictureOfTheDay.id))
             },
-            onItemsMoreClicked = { /* Todo */ },
+            onItemsMoreClicked = { viewModel.checkIfShowRefresh() },
             viewModel = viewModel
         )
     }

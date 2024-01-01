@@ -26,7 +26,13 @@ actual fun DailyPicture(
     val navigator = LocalNavigator.currentOrThrow
 
     NasaItemDetailScaffold(
-        onFavoriteClick = { navigator.push(FavoritesPicturesScreen) }
+        onRefresh = if (state.showRefresh) {
+            { viewModel.launchDayRequest() }
+        } else null,
+        onFavoriteClick = {
+            viewModel.checkIfShowRefresh()
+            navigator.push(FavoritesPicturesScreen)
+        }
     ) { padding ->
         PODItemsListScreen(
             loading = state.loading,

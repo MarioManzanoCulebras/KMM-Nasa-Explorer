@@ -1,7 +1,8 @@
 package com.mariomanzano.kmm_nasa_explorer.ui.common
 
 sealed class NasaIcon(val resourceId: String) {
-    object ArrowBack : NasaIcon("arrow_ios_back.xml")
+    object Refresh : NasaIcon("ic_refresh.xml")
+    object ArrowBack : NasaIcon("ic_arrow_ios_back.xml")
     object Spacecraft : NasaIcon("ic_spacecraft.xml")
 
     object RocketVertical : NasaIcon("ic_rocket.xml")

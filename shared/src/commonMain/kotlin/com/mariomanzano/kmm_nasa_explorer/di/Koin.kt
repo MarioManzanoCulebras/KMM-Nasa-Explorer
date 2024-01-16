@@ -25,7 +25,7 @@ import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-internal fun getBaseModules() = appModule + platformModule
+fun getBaseModules() = appModule + platformModule
 
 val appModule = module {
     single<HttpClient> { httpClient() }

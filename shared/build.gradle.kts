@@ -9,7 +9,8 @@ plugins {
 }
 
 // CocoaPods requires the podspec to have a version.
-version = "1.0"
+group = "com.mariomanzano.kmm_nasa_explorer"
+version = "1.0-SNAPSHOT"
 
 kotlin {
     kotlin.applyDefaultHierarchyTemplate()
@@ -19,6 +20,14 @@ kotlin {
                 jvmTarget = "1.8"
             }
         }
+    }
+
+    jvm("desktop") {
+        jvmToolchain(11)
+    }
+
+    sourceSets.nativeMain.dependencies {
+        implementation(libs.sqldelight.native.driver)
     }
 
     listOf(
@@ -64,6 +73,16 @@ kotlin {
 
         val commonComposeKmpMain by creating {
             dependsOn(commonMain)
+        }
+
+        val desktopMain by getting {
+            dependsOn(commonComposeKmpMain)
+            dependencies {
+                implementation(libs.ktor.client.cio)
+                implementation(compose.desktop.currentOs)
+                implementation(libs.sqldelight.jvm.driver)
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.4")
+            }
         }
 
         val androidMain by getting {

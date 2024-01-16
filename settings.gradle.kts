@@ -15,5 +15,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "KMM-Nasa-Explorer"
-include(":androidApp")
-include(":shared")
+include(":androidApp", ":shared", ":desktop")

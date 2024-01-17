@@ -29,6 +29,7 @@ compose.desktop {
     application {
         javaHome = "/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home"
         nativeDistributions {
+            packageVersion = "1.0-SNAPSHOT"
             outputBaseDir.set(project.buildDir.resolve("OutputDir"))
             includeAllModules = true
         }

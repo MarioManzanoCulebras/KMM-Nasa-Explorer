@@ -23,8 +23,8 @@ class DesktopPlatform : Platform {
 
 actual val platformModule: Module = module {
     single<SqlDriver> {
-        val driver = JdbcSqliteDriver("jdbc:sqlite:NasaDatabase.db")
-        if (!File("NasaDatabase.db").exists()) {
+        val driver = JdbcSqliteDriver("jdbc:sqlite:database/NasaDatabase.db")
+        if (!File("database/NasaDatabase.db").exists()) {
             NasaDatabase.Schema.create(driver)
             driver
         } else {

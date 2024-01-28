@@ -31,10 +31,14 @@ kotlin {
     }
 
     listOf(
+        macosX64(),
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
+        it.binaries {
+            executable()
+        }
         it.binaries.framework {
             baseName = "shared"
         }
@@ -125,7 +129,12 @@ sqldelight {
     databases {
         create("NasaDatabase") {
             packageName.set("com.mariomanzano.kmm_nasa_explorer.shared.cache")
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/databases"))
         }
     }
 }
 
+tasks.withType<Wrapper> {
+    gradleVersion = "8.1.1"
+    distributionType = Wrapper.DistributionType.BIN
+}

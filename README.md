@@ -19,3 +19,6 @@ Some notes for creating the distributable runner of the app on Desktop:
         javaHome = "/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home" (...)
   
   - For creating a desktop distributable follow the instructions on this link to createDistributable using gradle: https://github.com/JetBrains/compose-multiplatform/tree/master/tutorials/Native_distributions_and_local_execution
+
+Important note: This project requires the JDK 11 installed on the machine. This can be downloaded from Oracle:
+https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html

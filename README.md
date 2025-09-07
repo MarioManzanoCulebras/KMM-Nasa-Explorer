@@ -1,7 +1,8 @@
 # KMM-Nasa-Explorer
 Repository to migrate the existing Nasa Explorer Android App in this repository https://github.com/MarioManzanoCulebras/Nasa-Explorer to be Multiplatform and start running it in destktop and IOs platforms using Kotlin Multiplatform.
 
-TODO: Include Medium articule
+Quick Guide to migrate Android Application to run on Android, desktop and IOs using Kotlin Multiplatform
+https://medium.com/@manzanus/quick-guide-to-migrate-android-application-to-run-on-android-desktop-and-ios-using-kotlin-928a783c3491
 
 Some notes for creating the distributable runner of the app on Desktop:
   - In desktopMain/kotlin/com/mariomanzano/kmm_nasa_explorer/Platform.desktop.kt

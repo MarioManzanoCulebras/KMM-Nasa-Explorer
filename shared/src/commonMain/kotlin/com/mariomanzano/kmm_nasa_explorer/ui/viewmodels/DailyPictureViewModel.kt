@@ -4,6 +4,7 @@ import com.mariomanzano.kmm_nasa_explorer.Error
 import com.mariomanzano.kmm_nasa_explorer.domain.PictureOfDayItem
 import com.mariomanzano.kmm_nasa_explorer.network.toError
 import com.mariomanzano.kmm_nasa_explorer.usecases.GetPODUseCase
+import com.mariomanzano.kmm_nasa_explorer.usecases.RepairStoredPicturesUseCase
 import com.mariomanzano.kmm_nasa_explorer.usecases.RequestPODListUseCase
 import com.mariomanzano.kmm_nasa_explorer.usecases.RequestPODSingleDayUseCase
 import com.mariomanzano.kmm_nasa_explorer.utils.ViewModel
@@ -20,13 +21,20 @@ import kotlinx.datetime.toLocalDateTime
 class DailyPictureViewModel(
     getPODUseCase: GetPODUseCase,
     private val requestPODListUseCase: RequestPODListUseCase,
-    private val requestPODSingleDayUseCase: RequestPODSingleDayUseCase
+    private val requestPODSingleDayUseCase: RequestPODSingleDayUseCase,
+    private val repairStoredPicturesUseCase: RepairStoredPicturesUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(UiState())
     val state = _state.asStateFlow()
 
     init {
+        // Runs next to the loading below: stored pictures are shown at once and update as they
+        // are repaired, because the list comes from the database.
+        viewModelScope.launch {
+            repairStoredPicturesUseCase()
+        }
+
         viewModelScope.launch {
             _state.update { _state.value.copy(loading = true) }
             getPODUseCase()

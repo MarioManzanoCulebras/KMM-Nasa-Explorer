@@ -21,6 +21,15 @@ internal const val APOD_TOTAL_PAGES_HEADER = "X-WP-TotalPages"
 /** Only the fields the app reads, so the response does not carry the HTML of every page. */
 internal const val APOD_FIELDS = "date,title,explanation,media_type,url,hdurl"
 
+/** The HTML page of a picture, used only when `hdurl` is the generic picture. */
+internal const val APOD_PAGE_FIELDS = "basic_html"
+
+/**
+ * Generic NASA picture the API returns as `hdurl` for some days (most of 1995 and 1996, and now
+ * and then later) instead of their own image.
+ */
+internal const val APOD_PLACEHOLDER_IMAGE = "/images/misc/news-thumbnail.png"
+
 /** Formats a date the way the APOD endpoint expects it: 2026-11-10 becomes 261110. */
 internal fun LocalDate.toApodDate(): String =
     twoDigits(year % 100) + twoDigits(monthNumber) + twoDigits(dayOfMonth)

@@ -40,3 +40,17 @@ VALUES (?, ?,?,?,?,?,?,?);
 
 updatePOD:
 UPDATE DbPOD SET favorite = ? WHERE id = ?;
+
+-- Rows saved by versions of the app that used the legacy api.nasa.gov endpoint: images on the
+-- apod.nasa.gov host (now redirected to an HTML page) and placeholder entries with the NASA logo.
+-- Keep the conditions in sync with data/LegacyContent.kt.
+getPODsNeedingRepair:
+SELECT * FROM DbPOD
+WHERE (mediaType = 'image'
+       AND (url LIKE 'https://apod.nasa.gov/apod/image/%' OR url LIKE 'http://apod.nasa.gov/apod/image/%'))
+   OR url = 'https://science.nasa.gov/wp-content/themes/nasa-child/assets/images/nasa-logo@2x.png'
+ORDER BY favorite DESC, date DESC;
+
+-- Leaves the favorite mark untouched.
+repairPOD:
+UPDATE DbPOD SET title = ?, description = ?, url = ?, mediaType = ? WHERE id = ? AND type = ?;

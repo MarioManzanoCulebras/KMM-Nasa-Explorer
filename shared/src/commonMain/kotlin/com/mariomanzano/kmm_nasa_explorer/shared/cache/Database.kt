@@ -61,6 +61,25 @@ class Database(sqlDriver: SqlDriver) {
 
     internal fun updatePOD(id: Int, favorite: Boolean) = dbQuery.updatePOD(favorite, id.toLong())
 
+    internal fun getPODsNeedingRepair(): List<PictureOfDayItem> =
+        dbQuery.getPODsNeedingRepair(::mapToDomainModel).executeAsList()
+
+    /** Updates the content of every item in one transaction, keeping its favorite mark. */
+    internal fun repairPODs(list: List<PictureOfDayItem>) {
+        dbQuery.transaction {
+            list.forEach { pod ->
+                dbQuery.repairPOD(
+                    title = pod.title,
+                    description = pod.description,
+                    url = pod.url,
+                    mediaType = pod.mediaType,
+                    id = pod.id.toLong(),
+                    type = pod.type
+                )
+            }
+        }
+    }
+
     private fun mapToDomainModel(
         id: Long,
         date: String,

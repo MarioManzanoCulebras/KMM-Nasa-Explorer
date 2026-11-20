@@ -16,4 +16,10 @@ interface PODLocalDataSource {
     suspend fun savePOD(item: PictureOfDayItem): Error?
 
     suspend fun updatePOD(id: Int, favorite: Boolean): Error?
+
+    /** Rows saved from the legacy API whose image or content no longer works, favorites first. */
+    suspend fun findPODsNeedingRepair(): List<PictureOfDayItem>
+
+    /** Replaces title, description, url and media type of the given rows, keeping favorites. */
+    suspend fun repairPODs(items: List<PictureOfDayItem>): Error?
 }

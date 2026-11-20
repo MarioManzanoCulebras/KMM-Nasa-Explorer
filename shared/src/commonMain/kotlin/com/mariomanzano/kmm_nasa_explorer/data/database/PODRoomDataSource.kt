@@ -11,6 +11,7 @@ import com.mariomanzano.kmm_nasa_explorer.shared.cache.Database
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
 class PODRoomDataSource(private val database: Database) : PODLocalDataSource {
 
@@ -58,4 +59,17 @@ class PODRoomDataSource(private val database: Database) : PODLocalDataSource {
             ifLeft = { it },
             ifRight = { null }
         )
+
+    override suspend fun findPODsNeedingRepair(): List<PictureOfDayItem> =
+        withContext(Dispatchers.IO) { database.getPODsNeedingRepair() }
+
+    override suspend fun repairPODs(items: List<PictureOfDayItem>): Error? =
+        withContext(Dispatchers.IO) {
+            tryCall {
+                database.repairPODs(items)
+            }.fold(
+                ifLeft = { it },
+                ifRight = { null }
+            )
+        }
 }

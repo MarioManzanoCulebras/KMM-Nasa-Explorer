@@ -2,6 +2,7 @@ package com.mariomanzano.kmm_nasa_explorer
 
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
+import com.mariomanzano.kmm_nasa_explorer.network.APOD_BASE_URL
 import com.mariomanzano.kmm_nasa_explorer.shared.cache.NasaDatabase
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
@@ -38,7 +39,7 @@ actual fun httpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(Darwi
     }
     defaultRequest {
         header("Content-Type", "application/json")
-        url("https://api.nasa.gov/")
+        url(APOD_BASE_URL)
     }
     install(ContentNegotiation) {
         json(Json {

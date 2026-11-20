@@ -73,6 +73,8 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
             implementation(libs.koin.test)
+            implementation(libs.ktor.client.mock)
+            implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.test)
         }
 
         val commonComposeKmpMain by creating {

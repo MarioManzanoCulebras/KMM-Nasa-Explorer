@@ -73,6 +73,38 @@ class FavoriteViewModelsTest {
     }
 
     @Test
+    fun favoritesAreNotDuplicatedWhenTheDatabaseChanges() = runTest {
+        val local = local(older, newer)
+        val viewModel = favoriteViewModel(local)
+        viewModel.getFavorites()
+        advanceUntilIdle()
+
+        local.repairPODs(listOf(newer.copy(url = "https://assets.science.nasa.gov/new.jpg")))
+        advanceUntilIdle()
+
+        assertEquals(
+            listOf(newer.copy(url = "https://assets.science.nasa.gov/new.jpg"), older),
+            viewModel.state.value.items
+        )
+    }
+
+    @Test
+    fun openingFavoritesAgainDoesNotDuplicateThem() = runTest {
+        val local = local(older, notFavorite, newer)
+        val viewModel = favoriteViewModel(local)
+
+        viewModel.getFavorites()
+        advanceUntilIdle()
+        viewModel.getFavorites()
+        advanceUntilIdle()
+        // Any change in the database emits the favorites again.
+        local.repairPODs(listOf(notFavorite.copy(title = "Changed")))
+        advanceUntilIdle()
+
+        assertEquals(listOf(newer, older), viewModel.state.value.items)
+    }
+
+    @Test
     fun getFavoritesReportsNoDataWhenThereAreNoFavorites() = runTest {
         val viewModel = favoriteViewModel(local(notFavorite))
 

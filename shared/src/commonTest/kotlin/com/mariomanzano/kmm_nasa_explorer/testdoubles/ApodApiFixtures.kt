@@ -74,6 +74,28 @@ object ApodApiFixtures {
     fun page(dates: List<String>): String =
         dates.joinToString(separator = ",", prefix = "[", postfix = "]") { picture(it) }
 
+    /** Generic picture the API gives some days instead of their own image. */
+    const val GENERIC_PICTURE =
+        "https://assets.science.nasa.gov/dynamicimage/assets/science/astro/programs/" +
+                "cosmic-origins/images/misc/news-thumbnail.png?w=594&h=516&fit=clip"
+
+    /** The image linked from the page of a day whose `hdurl` is [GENERIC_PICTURE]. */
+    fun linkedImage(date: String) =
+        "https://assets.science.nasa.gov/content/dam/science/cds/apod/apod/$date/linked_big.gif"
+
+    /** A picture of a day whose `hdurl` is the generic picture. */
+    fun pictureWithGenericImage(date: String, mediaType: String = "image"): String =
+        """{"date":"$date","title":"Title $date","media_type":"$mediaType",""" +
+                """"explanation":"Text for $date.",""" +
+                """"url":"${pageUrl(date)}","hdurl":"$GENERIC_PICTURE"}"""
+
+    /** Answer of `apod-basic/{yymmdd}?_fields=basic_html` for a page that links [image]. */
+    fun pageLinking(image: String?): String {
+        val link = image?.let { """<a href=\"$it\"><img src=\"https://example.test/small.gif\"></a>""" }
+            .orEmpty()
+        return """{"basic_html":"<!doctype html><html><body><p>Text</p>$link</body></html>"}"""
+    }
+
     /** [count] consecutive days ending at [newest], newest first, like the server sorts them. */
     fun datesBackFrom(newest: LocalDate, count: Int): List<String> =
         (0 until count).map { newest.minus(it, DateTimeUnit.DAY).toString() }

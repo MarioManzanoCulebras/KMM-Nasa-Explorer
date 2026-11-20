@@ -3,6 +3,8 @@ package com.mariomanzano.kmm_nasa_explorer.testdoubles
 import arrow.core.Either
 import arrow.core.left
 import com.mariomanzano.kmm_nasa_explorer.Error
+import com.mariomanzano.kmm_nasa_explorer.data.isLegacyImageRow
+import com.mariomanzano.kmm_nasa_explorer.data.isPlaceholderRow
 import com.mariomanzano.kmm_nasa_explorer.datasources.PODLocalDataSource
 import com.mariomanzano.kmm_nasa_explorer.datasources.PODRemoteDataSource
 import com.mariomanzano.kmm_nasa_explorer.domain.PictureOfDayItem
@@ -66,12 +68,16 @@ class FakePODRemoteDataSource(
         return dayResult
     }
 
+    /** Answers the list requests; by default with [listResult] whatever the range. */
+    var listAnswer: (from: String, to: String) -> Either<Error, List<PictureOfDayItem>> =
+        { _, _ -> listResult }
+
     override suspend fun findPODitems(
         from: String,
         to: String
     ): Either<Error, List<PictureOfDayItem>> {
         listRequests += from to to
-        return listResult
+        return listAnswer(from, to)
     }
 }
 
@@ -124,6 +130,33 @@ class FakePODLocalDataSource(
         writeError?.let { return it }
         items.update { current ->
             current.map { if (it.id == id) it.copy(favorite = favorite) else it }
+        }
+        return null
+    }
+
+    val repairBatches = mutableListOf<List<PictureOfDayItem>>()
+
+    /** Same rule and order as the getPODsNeedingRepair query. */
+    override suspend fun findPODsNeedingRepair(): List<PictureOfDayItem> =
+        items.value
+            .filter { it.isLegacyImageRow() || it.isPlaceholderRow() }
+            .sortedWith(compareByDescending<PictureOfDayItem> { it.favorite }.thenByDescending { it.date })
+
+    /** Same as the repairPOD query: replaces the content, keeps the favorite mark. */
+    override suspend fun repairPODs(items: List<PictureOfDayItem>): Error? {
+        repairBatches += items
+        writeError?.let { return it }
+        this.items.update { current ->
+            current.map { stored ->
+                val repaired = items.firstOrNull { it.id == stored.id && it.type == stored.type }
+                    ?: return@map stored
+                stored.copy(
+                    title = repaired.title,
+                    description = repaired.description,
+                    url = repaired.url,
+                    mediaType = repaired.mediaType
+                )
+            }
         }
         return null
     }

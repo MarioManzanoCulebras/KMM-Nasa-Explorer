@@ -5,6 +5,7 @@ import com.mariomanzano.kmm_nasa_explorer.domain.NasaItem
 import com.mariomanzano.kmm_nasa_explorer.network.toError
 import com.mariomanzano.kmm_nasa_explorer.usecases.GetFavoritesUseCase
 import com.mariomanzano.kmm_nasa_explorer.utils.ViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -20,8 +21,12 @@ class FavoriteViewModel(
 
     private val favoriteList: MutableList<NasaItem> = mutableListOf()
 
+    private var favoritesJob: Job? = null
+
     fun getFavorites() {
-        viewModelScope.launch {
+        // The view model outlives the screen: stop listening for the previous visit.
+        favoritesJob?.cancel()
+        favoritesJob = viewModelScope.launch {
             favoriteList.clear()
             _state.update {
                 it.copy(loading = true, items = favoriteList)
@@ -36,8 +41,9 @@ class FavoriteViewModel(
                     }
                 }
                 .collect { items ->
+                    // Every change in the database emits the whole list again.
+                    favoriteList.clear()
                     favoriteList.addAll(items.sortedBy { it.type })
-                    favoriteList
                     if (favoriteList.isEmpty()) {
                         _state.update {
                             it.copy(loading = false, error = Error.NoData)

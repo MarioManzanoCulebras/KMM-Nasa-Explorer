@@ -1,13 +1,16 @@
 package com.mariomanzano.kmm_nasa_explorer.ui.viewmodels
 
+import arrow.core.left
 import arrow.core.right
 import com.mariomanzano.kmm_nasa_explorer.Error
 import com.mariomanzano.kmm_nasa_explorer.data.repositories.DailyPicturesRepository
 import com.mariomanzano.kmm_nasa_explorer.domain.PictureOfDayItem
 import com.mariomanzano.kmm_nasa_explorer.testdoubles.FakePODLocalDataSource
 import com.mariomanzano.kmm_nasa_explorer.testdoubles.FakePODRemoteDataSource
+import com.mariomanzano.kmm_nasa_explorer.testdoubles.LegacyRows
 import com.mariomanzano.kmm_nasa_explorer.testdoubles.pictureOfDay
 import com.mariomanzano.kmm_nasa_explorer.usecases.GetPODUseCase
+import com.mariomanzano.kmm_nasa_explorer.usecases.RepairStoredPicturesUseCase
 import com.mariomanzano.kmm_nasa_explorer.usecases.RequestPODListUseCase
 import com.mariomanzano.kmm_nasa_explorer.usecases.RequestPODSingleDayUseCase
 import kotlinx.coroutines.Dispatchers
@@ -175,6 +178,42 @@ class DailyPictureViewModelTest {
         assertFalse(date.sameDay(LocalDate(2023, 2, 28)))
     }
 
+    @Test
+    fun picturesStoredFromTheLegacyApiAreRepairedOnStartAndShown() = runTest {
+        val legacyFavorite = LegacyRows.legacyImage(yesterday.toString(), favorite = true)
+        val placeholder = LegacyRows.placeholder(twoDaysAgo.toString())
+        remote.listAnswer = { _, _ ->
+            listOf(LegacyRows.fresh(yesterday.toString()), LegacyRows.fresh(twoDaysAgo.toString())).right()
+        }
+
+        val viewModel = viewModel(stored = listOf(legacyFavorite, placeholder))
+        advanceUntilIdle()
+
+        val pictures = viewModel.state.value.dailyPictures.orEmpty()
+        assertEquals(
+            listOf(LegacyRows.newImage(yesterday.toString()), LegacyRows.newImage(twoDaysAgo.toString())),
+            pictures.map { it.url }
+        )
+        assertEquals(
+            listOf(legacyFavorite.title, "New title $twoDaysAgo"),
+            pictures.map { it.title }
+        )
+        assertEquals(listOf(true, false), pictures.map { it.favorite })
+    }
+
+    @Test
+    fun storedPicturesStayVisibleWhenTheRepairFails() = runTest {
+        val legacy = LegacyRows.legacyImage(yesterday.toString())
+        remote.listAnswer = { _, _ -> Error.Connectivity.left() }
+
+        val viewModel = viewModel(stored = listOf(legacy))
+        advanceUntilIdle()
+
+        val state = viewModel.state.value
+        assertEquals(listOf(legacy), state.dailyPictures)
+        assertNull(state.error)
+    }
+
     private fun picture(date: LocalDate): PictureOfDayItem = pictureOfDay(date.toString())
 
     private fun viewModel(stored: List<PictureOfDayItem>): DailyPictureViewModel {
@@ -182,7 +221,8 @@ class DailyPictureViewModelTest {
         return DailyPictureViewModel(
             getPODUseCase = GetPODUseCase(repository),
             requestPODListUseCase = RequestPODListUseCase(repository),
-            requestPODSingleDayUseCase = RequestPODSingleDayUseCase(repository)
+            requestPODSingleDayUseCase = RequestPODSingleDayUseCase(repository),
+            repairStoredPicturesUseCase = RepairStoredPicturesUseCase(repository)
         ).also { viewModels += it }
     }
 }
